@@ -12,6 +12,39 @@ function assertString(v: unknown, label: string): asserts v is string {
   if (typeof v !== "string") throw new TypeError(`expected ${label} to be string, got ${typeof v}`);
 }
 
+function createAbortAwarePendingFetch(): (
+  url: string,
+  init?: { signal?: AbortSignal },
+) => Promise<Response> {
+  // The keepalive timer is the test double's own event-loop anchor: relying on
+  // the production AbortSignal.timeout() alone has been observed to let the
+  // event loop go idle on Node 22 before the abort fires, hanging the test.
+  const KEEPALIVE_MS = 60_000;
+  return (_url: string, init?: { signal?: AbortSignal }) =>
+    new Promise<Response>((_, reject) => {
+      const signal = init?.signal;
+      if (signal?.aborted) {
+        reject(signal.reason ?? new Error("aborted"));
+        return;
+      }
+      let keepalive: ReturnType<typeof setTimeout> | undefined;
+      const onAbort = () => {
+        cleanup();
+        reject(signal?.reason ?? new Error("aborted"));
+      };
+      const onKeepaliveExpired = () => {
+        if (signal) signal.removeEventListener("abort", onAbort);
+        reject(new Error("test keepalive expired before abort"));
+      };
+      const cleanup = () => {
+        if (keepalive !== undefined) clearTimeout(keepalive);
+        if (signal) signal.removeEventListener("abort", onAbort);
+      };
+      keepalive = setTimeout(onKeepaliveExpired, KEEPALIVE_MS);
+      signal?.addEventListener("abort", onAbort, { once: true });
+    });
+}
+
 describe("fetchPreviousArchives", () => {
   let tmpDir: string;
 
@@ -479,16 +512,7 @@ describe("fetchPreviousArchives chain walk", () => {
   });
 
   it("applies the configured per-attempt timeout to each individual chain entry", async () => {
-    const fetchMock = mock.method(
-      globalThis,
-      "fetch",
-      (_url: string, init?: { signal?: AbortSignal }) =>
-        new Promise<Response>((_, reject) => {
-          init?.signal?.addEventListener("abort", () => {
-            reject(init.signal?.reason ?? new Error("aborted"));
-          });
-        }),
-    );
+    const fetchMock = mock.method(globalThis, "fetch", createAbortAwarePendingFetch());
 
     const distDir = join(tmpDir, "dist");
     await rejects(
