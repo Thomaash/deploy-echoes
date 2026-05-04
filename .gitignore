@@ -1,0 +1,7 @@
+.stryker-tmp/
+reports/mutation/
+
+/*.tgz
+/.pnpm-store/
+/dist/
+/node_modules/

@@ -1,0 +1,60 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import", "node", "promise", "jsdoc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error"
+  },
+  "options": {
+    "typeAware": true
+  },
+  "env": {
+    "node": true,
+    "builtin": true
+  },
+  "settings": {
+    "jsdoc": {
+      "tagNamePreference": {
+        "typeParam": "typeParam",
+        "remarks": "remarks",
+        "privateRemarks": "privateRemarks",
+        "sealed": "sealed",
+        "virtual": "virtual",
+        "experimental": "experimental"
+      }
+    }
+  },
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": "error",
+    "unicorn/prefer-number-properties": ["error", { "checkInfinity": true, "checkNaN": true }],
+    "unicorn/prefer-node-protocol": "error",
+    "jsdoc/require-param": "error",
+    "jsdoc/require-param-name": "error",
+    "jsdoc/require-param-description": "error",
+    "jsdoc/require-returns": "error",
+    "jsdoc/require-returns-description": "error",
+    "jsdoc/check-tag-names": "error",
+    "jsdoc/check-property-names": "error",
+    "jsdoc/empty-tags": "error",
+    "jsdoc/no-defaults": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.test.ts", "*.spec.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "jsdoc/require-param": "off",
+        "jsdoc/require-param-name": "off",
+        "jsdoc/require-param-description": "off",
+        "jsdoc/require-returns": "off",
+        "jsdoc/require-returns-description": "off",
+        "jsdoc/check-tag-names": "off",
+        "jsdoc/check-property-names": "off",
+        "jsdoc/empty-tags": "off",
+        "jsdoc/no-defaults": "off"
+      }
+    }
+  ]
+}
