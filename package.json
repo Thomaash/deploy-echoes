@@ -66,7 +66,7 @@
     "@types/node": "25.6.0",
     "@typescript/native-preview": "7.0.0-dev.20260504.1",
     "husky": "9.1.7",
-    "lint-staged": "16.4.0",
+    "lint-staged": "17.0.5",
     "oxfmt": "0.47.0",
     "oxlint": "1.62.0",
     "oxlint-tsgolint": "0.22.1",
