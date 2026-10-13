@@ -1,6 +1,6 @@
 {
   "name": "@vycital/deploy-echoes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Keep old static-site paths resolving by carrying archived files forward on each deploy.",
   "keywords": [
     "archive",
