@@ -1,4 +1,4 @@
-# @tomina/deploy-echoes
+# @vycital/deploy-echoes
 
 Small CLI for static-site deployment on simple CDN-backed hosts such as GitHub Pages.
 
@@ -7,7 +7,7 @@ Small CLI for static-site deployment on simple CDN-backed hosts such as GitHub P
 ## Quick start
 
 ```sh
-npm install --save-dev @tomina/deploy-echoes
+npm install --save-dev @vycital/deploy-echoes
 ```
 
 ```sh
