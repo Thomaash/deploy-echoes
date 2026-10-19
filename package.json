@@ -57,7 +57,7 @@
   "devDependencies": {
     "@commitlint/cli": "21.2.3",
     "@commitlint/config-conventional": "21.2.3",
-    "@fission-ai/openspec": "1.14.1",
+    "@fission-ai/openspec": "1.14.2",
     "@semantic-release/commit-analyzer": "13.0.1",
     "@semantic-release/github": "12.0.10",
     "@semantic-release/npm": "13.2.0",
@@ -67,8 +67,8 @@
     "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
-    "oxfmt": "0.72.0",
-    "oxlint": "1.87.0",
+    "oxfmt": "0.73.0",
+    "oxlint": "1.88.0",
     "oxlint-tsgolint": "7.0.2004",
     "semantic-release": "25.0.9"
   },
